@@ -7,8 +7,26 @@ public class SimpleIdleGame : ModuleRules
 	public SimpleIdleGame(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		
+		PublicIncludePaths.AddRange(
+			new string[] 
+			{
+				"SimpleIdleGame",
+				"SimpleIdleGame/UI",
+				"SimpleIdleGame/GameMode",
+				"SimpleIdleGame/Character"
+			}
+		);
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[]
+		{
+			"Core", 
+			"CoreUObject", 
+			"Engine", 
+			"InputCore", 
+			"EnhancedInput",
+			"UMG"
+		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
