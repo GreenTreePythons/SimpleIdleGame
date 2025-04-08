@@ -13,8 +13,11 @@ protected:
     virtual void BeginPlay() override;
 
 private:
-    ATitleHUD();
-    
+    // UMG 위젯 클래스
+    UPROPERTY()
     TSubclassOf<class UUserWidget> TitleWidgetClass;
+
+    // 생성된 위젯 인스턴스
+    UPROPERTY()
     class UUserWidget* TitleWidget;
 };
