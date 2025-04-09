@@ -42,12 +42,15 @@ void UTitleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	switch (m_FadeStage)
 	{
 	case EFadeStage::WaitBeforeLogoIn:
-		if (m_ElapsedTime >= 1.5f)
 		{
-			m_ElapsedTime = 0.0f;
-			m_FadeStage = EFadeStage::FadeInLogo;
+			if (m_ElapsedTime >= 1.5f)
+			{
+				UE_LOG(LogTemp, Error, TEXT("Logo ui fade in"));
+				m_ElapsedTime = 0.0f;
+				m_FadeStage = EFadeStage::FadeInLogo;
+			}
+			break;
 		}
-		break;
 
 	case EFadeStage::FadeInLogo:
 		{
@@ -55,6 +58,7 @@ void UTitleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			
 			if (m_FadeInAlpha >= 1.0f)
 			{
+				UE_LOG(LogTemp, Error, TEXT("Logo ui fade out"));
 				m_ElapsedTime = 0.0f;
 				m_FadeStage = EFadeStage::FadeOutGroup;
 			}
@@ -63,6 +67,7 @@ void UTitleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 	case EFadeStage::FadeOutGroup:
 		{
+			
 			float fadeOutAlpha = FMath::Clamp(1.0f - (m_ElapsedTime / 1.0f), 0.0f, 1.0f);
 			if (LogoBgImage)
 				LogoBgImage->SetRenderOpacity(fadeOutAlpha);
@@ -72,28 +77,31 @@ void UTitleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 			if (fadeOutAlpha <= 0.0f)
 			{
+				UE_LOG(LogTemp, Error, TEXT("Logo ui done"));
 				m_FadeStage = EFadeStage::Done;
 			}
 			break;
 		}
 
 	case EFadeStage::Done:
-		RootUIGroup->SetVisibility(ESlateVisibility::Collapsed);
-		LogoBgImage->SetVisibility(ESlateVisibility::Collapsed);
-		break;
+		{
+			RootUIGroup->SetVisibility(ESlateVisibility::Collapsed);
+			LogoBgImage->SetVisibility(ESlateVisibility::Collapsed);
+			break;
+		}
 	}
 }
 
 void UTitleWidget::OnClickSinglePlay()
 {
 	UE_LOG(LogTemp, Log, TEXT("싱글플레이"));
-	UGameplayStatics::OpenLevel(this, TEXT("SinglePlayMapName")); // 실제 맵 이름으로 바꿔줘
+	UGameplayStatics::OpenLevel(this, TEXT("Stage"));
 }
 
 void UTitleWidget::OnClickMultiPlay()
 {
 	UE_LOG(LogTemp, Log, TEXT("멀티플레이"));
-	UGameplayStatics::OpenLevel(this, TEXT("MultiPlayMapName")); // 실제 맵 이름으로 바꿔줘
+	UGameplayStatics::OpenLevel(this, TEXT("Stage"));
 }
 
 void UTitleWidget::OnClickExit()

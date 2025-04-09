@@ -18,11 +18,9 @@ void ATitleGameMode::BeginPlay()
 	APlayerController* PC = GetWorld()->GetFirstPlayerController();
 	if (PC)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[TitleGameMode] PlayerController obtained: %s"), *PC->GetName());
 		AActor* CameraActor = UGameplayStatics::GetActorOfClass(GetWorld(), ACameraActor::StaticClass());
 		if (CameraActor)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("[TitleGameMode] Setting ViewTarget to CameraActor: %s"), *CameraActor->GetName());
 			PC->SetViewTarget(CameraActor);
 		}
 	}

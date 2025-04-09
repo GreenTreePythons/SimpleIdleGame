@@ -8,7 +8,7 @@ void ATitleHUD::BeginPlay()
 
     UE_LOG(LogTemp, Warning, TEXT("[TitleHUD] BeginPlay called"));
     
-    TitleWidgetClass = LoadClass<UUserWidget>(nullptr, TEXT("/Game/BluePrints/WBP_TitleWidget.WBP_TitleWidget_C"));
+    TitleWidgetClass = LoadClass<UUserWidget>(nullptr, TEXT("/Game/Widgets/WBP_TitleWidget.WBP_TitleWidget_C"));
     
     if (TitleWidgetClass)
     {

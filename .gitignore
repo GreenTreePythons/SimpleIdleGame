@@ -18,6 +18,9 @@ Saved/
 # Ignore crash reports
 CrashReportClient/
 
+# Ignore resources
+Resources/
+
 # --------------------------------------
 # IDEs and Editor-specific Configs
 # --------------------------------------
