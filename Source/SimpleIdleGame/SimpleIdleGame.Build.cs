@@ -8,7 +8,8 @@ public class SimpleIdleGame : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
-		PublicIncludePaths.AddRange(
+		PublicIncludePaths.AddRange
+		(
 			new string[] 
 			{
 				"SimpleIdleGame",

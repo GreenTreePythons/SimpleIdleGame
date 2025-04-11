@@ -20,6 +20,7 @@ CrashReportClient/
 
 # Ignore resources
 Resources/
+StarterContent/
 
 # --------------------------------------
 # IDEs and Editor-specific Configs
