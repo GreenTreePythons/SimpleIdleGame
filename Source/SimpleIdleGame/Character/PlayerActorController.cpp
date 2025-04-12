@@ -5,7 +5,7 @@
 
 APlayerActorController::APlayerActorController()
 {
-	bShowMouseCursor = false;
+	bShowMouseCursor = true;
 }
 
 void APlayerActorController::SetupInputComponent()

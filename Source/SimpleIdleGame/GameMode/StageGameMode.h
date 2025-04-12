@@ -22,4 +22,6 @@ protected:
 
 private:
 	void SpawnPlayerCharacter();
+	void SetIngameWidget();
+	void SetCamera();
 };
