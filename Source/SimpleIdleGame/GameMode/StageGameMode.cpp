@@ -1,12 +1,14 @@
 ﻿#include "StageGameMode.h"
 #include "Blueprint/UserWidget.h"
 #include "IngameWidget.h"
+#include "PlayerActorController.h"
 #include "Camera/CameraActor.h"
 #include "Kismet/GameplayStatics.h"
 
 AStageGameMode::AStageGameMode()
 {
 	DefaultPawnClass = nullptr;
+	PlayerControllerClass = APlayerActorController::StaticClass();
 }
 
 void AStageGameMode::BeginPlay()

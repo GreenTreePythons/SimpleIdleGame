@@ -18,6 +18,7 @@ public:
 	APlayerActorController();
 
 protected:
+	virtual  void OnPossess(APawn* InPawn) override;
 	virtual void SetupInputComponent() override;
 
 	void MoveForward(float Value);

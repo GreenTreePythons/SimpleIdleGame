@@ -6,11 +6,21 @@
 APlayerActorController::APlayerActorController()
 {
 	bShowMouseCursor = true;
+	UE_LOG(LogTemp, Error, TEXT(">>> PlayerActorController())"));
+}
+
+void APlayerActorController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+	UE_LOG(LogTemp, Warning, TEXT(">>> OnPossess: Pawn possessed"));
+
+	SetupInputComponent();
 }
 
 void APlayerActorController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
+	UE_LOG(LogTemp, Error, TEXT(">>> SetupInputComponent())"));
     
 	// 조이스틱 입력을 설정합니다.
 	InputComponent->BindAxis("MoveForward", this, &APlayerActorController::MoveForward);
