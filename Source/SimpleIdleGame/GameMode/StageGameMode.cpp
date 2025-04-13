@@ -1,6 +1,7 @@
 ﻿#include "StageGameMode.h"
 #include "Blueprint/UserWidget.h"
 #include "IngameWidget.h"
+#include "PlayerActor.h"
 #include "PlayerActorController.h"
 #include "Camera/CameraActor.h"
 #include "Kismet/GameplayStatics.h"
@@ -18,7 +19,7 @@ void AStageGameMode::BeginPlay()
 	UE_LOG(LogTemp, Log, TEXT("스테이지 시작"));
 
 	SpawnPlayerCharacter();
-	SetCamera();
+	// SetCamera();
 	SetIngameWidget();
 }
 
@@ -34,10 +35,11 @@ void AStageGameMode::SpawnPlayerCharacter()
 			FRotator SpawnRotation = FRotator::ZeroRotator;
 
 			AActor* PlayerCharacter = GetWorld()->SpawnActor<AActor>(PlayerCharacterClass, SpawnLocation, SpawnRotation);
-            
-			if (PlayerCharacter)
+			APlayerActor* PlayerActor = Cast<APlayerActor>(PlayerCharacter);
+			if (PlayerActor)
 			{
-				PC->Possess(Cast<APawn>(PlayerCharacter));
+				UE_LOG(LogTemp, Warning, TEXT("Set Player actor"));
+				PC->Possess(Cast<APawn>(PlayerActor));
 			}
 		}
 	}
@@ -74,7 +76,12 @@ void AStageGameMode::SetCamera()
 		AActor* CameraActor = UGameplayStatics::GetActorOfClass(GetWorld(), ACameraActor::StaticClass());
 		if (CameraActor)
 		{
+			UE_LOG(LogTemp, Log, TEXT("Set camera"));
 			PC->SetViewTarget(CameraActor); // 카메라를 플레이어 컨트롤러에 설정
+		}
+		else
+		{
+			UE_LOG(LogTemp, Log, TEXT("Set camera fail"));
 		}
 	}
 }

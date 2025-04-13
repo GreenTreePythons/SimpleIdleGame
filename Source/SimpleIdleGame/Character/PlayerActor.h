@@ -3,21 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
-#include "BaseCharacter.generated.h"
+#include "PlayerActor.generated.h"
 
 UCLASS()
-class SIMPLEIDLEGAME_API ABaseCharacter : public ACharacter
+class SIMPLEIDLEGAME_API APlayerActor : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	ABaseCharacter();
+	APlayerActor();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UCameraComponent* FollowCamera;
 
 public:
 	// Called every frame

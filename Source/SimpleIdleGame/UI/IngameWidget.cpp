@@ -3,6 +3,7 @@
 
 #include "IngameWidget.h"
 #include "JoystickPanelWidget.h"
+#include "PlayerActorController.h"
 
 void UIngameWidget::NativeConstruct()
 {
@@ -22,6 +23,20 @@ void UIngameWidget::NativeConstruct()
 		InputMode.SetWidgetToFocus(nullptr);
 		PC->SetInputMode(InputMode);
 	}
+}
+
+void UIngameWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	 Super::NativeTick(MyGeometry, InDeltaTime);
+    
+        if (IsUsingJoystick())
+        {
+            APlayerActorController* PlayerController = Cast<APlayerActorController>(GetWorld()->GetFirstPlayerController());
+            if (PlayerController)
+            {
+                
+            }
+        }
 }
 
 FVector2D UIngameWidget::GetJoystickDirection() const

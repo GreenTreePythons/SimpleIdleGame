@@ -18,6 +18,7 @@ class SIMPLEIDLEGAME_API UIngameWidget : public UUserWidget
 	
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 	UPROPERTY(meta = (BindWidget))
 	UJoystickPanelWidget* JoystickPanelWidget;

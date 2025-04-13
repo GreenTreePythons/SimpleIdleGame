@@ -76,6 +76,6 @@ Desktop.ini
 # --------------------------------------
 # Unreal Plugin Outputs (optional)
 # --------------------------------------
-
+Plugins/
 Plugins/*/Binaries/
 Plugins/*/Intermediate/
