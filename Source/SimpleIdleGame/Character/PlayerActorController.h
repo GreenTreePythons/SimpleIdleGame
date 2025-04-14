@@ -16,6 +16,7 @@ class SIMPLEIDLEGAME_API APlayerActorController : public APlayerController
 
 public:
 	APlayerActorController();
+	void MoveCharacterWithJoystick(FVector2D direction);
 
 protected:
 	virtual  void OnPossess(APawn* InPawn) override;

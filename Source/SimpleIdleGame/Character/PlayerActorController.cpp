@@ -46,3 +46,17 @@ void APlayerActorController::MoveRight(float Value)
 		ControlledPawn ->AddMovementInput(Direction, Value);
 	}
 }
+
+void APlayerActorController::MoveCharacterWithJoystick(FVector2D direction)
+{
+	if (direction.Size() > 0.0f)
+	{
+		// 캐릭터 이동 방향 계산
+		FVector ForwardDirection = FVector(direction.X, direction.Y, 0.0f);
+		APawn* ControlledPawn = GetPawn();
+		if (ControlledPawn)
+		{
+			ControlledPawn->AddMovementInput(ForwardDirection, 1.0f);
+		}
+	}
+}

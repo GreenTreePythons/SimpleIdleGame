@@ -28,6 +28,8 @@ public:
 	// 외부 접근용
 	FVector2D GetJoystickDirection() const { return m_NormalizedDirection; }
 	bool IsTouching() const { return m_bIsTouching; }
+	bool IsPointerOutside() const;
+	void ResetJoystickPosition();
 
 protected:
 	UPROPERTY(meta = (BindWidget))

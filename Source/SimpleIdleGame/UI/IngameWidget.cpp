@@ -4,6 +4,7 @@
 #include "IngameWidget.h"
 #include "JoystickPanelWidget.h"
 #include "PlayerActorController.h"
+#include "Components/CanvasPanelSlot.h"
 
 void UIngameWidget::NativeConstruct()
 {
@@ -27,21 +28,21 @@ void UIngameWidget::NativeConstruct()
 
 void UIngameWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	 Super::NativeTick(MyGeometry, InDeltaTime);
+	Super::NativeTick(MyGeometry, InDeltaTime);
     
-        if (IsUsingJoystick())
+    if (IsUsingJoystick())
+    {
+        APlayerActorController* PlayerController = Cast<APlayerActorController>(GetWorld()->GetFirstPlayerController());
+        if (PlayerController)
         {
-            APlayerActorController* PlayerController = Cast<APlayerActorController>(GetWorld()->GetFirstPlayerController());
-            if (PlayerController)
-            {
-                
-            }
+            PlayerController->MoveCharacterWithJoystick(GetJoystickDirection());
         }
+    }
 }
 
 FVector2D UIngameWidget::GetJoystickDirection() const
 {
-	return (JoystickPanelWidget && JoystickPanelWidget->IsTouching()) ? JoystickPanelWidget->GetJoystickDirection() : FVector2D::ZeroVector;
+	return IsUsingJoystick() ? JoystickPanelWidget->GetJoystickDirection() : FVector2D::ZeroVector;
 }
 
 bool UIngameWidget::IsUsingJoystick() const

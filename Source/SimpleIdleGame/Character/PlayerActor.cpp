@@ -11,14 +11,13 @@ APlayerActor::APlayerActor()
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(RootComponent);  // 카메라를 캐릭터의 루트에 부착
-	FollowCamera->bUsePawnControlRotation = false;  // 카메라가 회전하지 않게 설정 (조작을 따로 설정할 경우)
+	FollowCamera->bUsePawnControlRotation = false;  // 카메라가 회전하지 않게 설정
 }
 
 // Called when the game starts or when spawned
 void APlayerActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
