@@ -23,6 +23,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UCameraComponent* FollowCamera;
 
+	UPROPERTY(EditAnywhere, Category = "Animation")
+	UAnimSequence* IdleAnim;
+
+	UPROPERTY(EditAnywhere, Category = "Animation")
+	UAnimSequence* RunAnim;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
