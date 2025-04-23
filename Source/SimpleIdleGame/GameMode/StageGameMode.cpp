@@ -19,7 +19,7 @@ void AStageGameMode::BeginPlay()
 	UE_LOG(LogTemp, Log, TEXT("스테이지 시작"));
 
 	SpawnPlayerCharacter();
-	// SetCamera();
+	SetCamera();
 	SetIngameWidget();
 }
 
@@ -71,17 +71,20 @@ void AStageGameMode::SetIngameWidget()
 void AStageGameMode::SetCamera()
 {
 	APlayerController* PC = GetWorld()->GetFirstPlayerController();
-	if (PC)
+	if (!PC) return;
+
+	APawn* PlayerPawn = PC->GetPawn();
+	if (!PlayerPawn) return;
+	
+	FVector PlayerLocation = PlayerPawn->GetActorLocation();
+	FVector CameraLocation = PlayerLocation + FVector(-500.f, 0.f, 600.f);
+	FRotator CameraRotation = FRotator(-45.f, 0.f, 0.f);
+
+	// 카메라 생성
+	ACameraActor* FixedCamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraLocation, CameraRotation);
+	if (FixedCamera)
 	{
-		AActor* CameraActor = UGameplayStatics::GetActorOfClass(GetWorld(), ACameraActor::StaticClass());
-		if (CameraActor)
-		{
-			UE_LOG(LogTemp, Log, TEXT("Set camera"));
-			PC->SetViewTarget(CameraActor); // 카메라를 플레이어 컨트롤러에 설정
-		}
-		else
-		{
-			UE_LOG(LogTemp, Log, TEXT("Set camera fail"));
-		}
+		PC->SetViewTarget(FixedCamera); // 컨트롤러가 이 카메라를 시점으로 삼게 함
+		UE_LOG(LogTemp, Log, TEXT("Set independent camera"));
 	}
 }

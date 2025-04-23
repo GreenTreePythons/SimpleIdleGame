@@ -29,22 +29,38 @@ void APlayerActorController::SetupInputComponent()
 
 void APlayerActorController::MoveForward(float Value)
 {
+	if (FMath::IsNearlyZero(Value)) return;
+	
 	APawn* ControlledPawn  = GetPawn();
-	if (ControlledPawn )
-	{
-		FVector Direction = FRotationMatrix(ControlledPawn ->GetActorRotation()).GetUnitAxis(EAxis::X);
-		ControlledPawn ->AddMovementInput(Direction, Value);
-	}
+	if (!ControlledPawn ) return;
+	
+	const FVector InputDirection = FVector(0.f, 1.f, 0.f);
+	const FVector WorldDirection = ControlledPawn->GetActorRotation().RotateVector(InputDirection * Value);
+
+	FRotator TargetRotation = InputDirection.Rotation();
+	FRotator CurrentRotation = ControlledPawn->GetActorRotation();
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 10.f);
+
+	ControlledPawn->SetActorRotation(NewRotation);
+	ControlledPawn->AddMovementInput(WorldDirection.GetSafeNormal(), 1.f);
 }
 
 void APlayerActorController::MoveRight(float Value)
 {
+	if (FMath::IsNearlyZero(Value)) return;
+	
 	APawn* ControlledPawn  = GetPawn();
-	if (ControlledPawn )
-	{
-		FVector Direction = FRotationMatrix(ControlledPawn ->GetActorRotation()).GetUnitAxis(EAxis::Y);
-		ControlledPawn ->AddMovementInput(Direction, Value);
-	}
+	if (!ControlledPawn ) return;
+	
+	const FVector InputDirection = FVector(1.f, 0.f, 0.f);
+	const FVector WorldDirection = ControlledPawn->GetActorRotation().RotateVector(InputDirection * Value);
+
+	FRotator TargetRotation = InputDirection.Rotation();
+	FRotator CurrentRotation = ControlledPawn->GetActorRotation();
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 10.f);
+
+	ControlledPawn->SetActorRotation(NewRotation);
+	ControlledPawn->AddMovementInput(WorldDirection.GetSafeNormal(), 1.f);
 }
 
 void APlayerActorController::MoveCharacterWithJoystick(FVector2D direction)
