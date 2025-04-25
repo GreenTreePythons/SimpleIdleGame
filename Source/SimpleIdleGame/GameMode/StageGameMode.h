@@ -19,9 +19,14 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
+	virtual  void Tick(float DeltaTime) override;
+	
+	UPROPERTY()
+	ACameraActor* FollowCamera = nullptr;
+	
 private:
 	void SpawnPlayerCharacter();
 	void SetIngameWidget();
 	void SetCamera();
+	void UpdateCameraPos();
 };

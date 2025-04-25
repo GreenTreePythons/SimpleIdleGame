@@ -22,7 +22,6 @@ void APlayerActorController::SetupInputComponent()
 	Super::SetupInputComponent();
 	UE_LOG(LogTemp, Error, TEXT(">>> SetupInputComponent())"));
     
-	// 조이스틱 입력을 설정합니다.
 	InputComponent->BindAxis("MoveForward", this, &APlayerActorController::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &APlayerActorController::MoveRight);
 }
@@ -30,44 +29,45 @@ void APlayerActorController::SetupInputComponent()
 void APlayerActorController::MoveForward(float Value)
 {
 	if (FMath::IsNearlyZero(Value)) return;
-	
-	APawn* ControlledPawn  = GetPawn();
-	if (!ControlledPawn ) return;
-	
-	const FVector InputDirection = FVector(0.f, 1.f, 0.f);
-	const FVector WorldDirection = ControlledPawn->GetActorRotation().RotateVector(InputDirection * Value);
 
-	FRotator TargetRotation = InputDirection.Rotation();
-	FRotator CurrentRotation = ControlledPawn->GetActorRotation();
-	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 10.f);
+	const FVector InputDirection = FVector(Value, 0.f, 0.f);
 
-	ControlledPawn->SetActorRotation(NewRotation);
-	ControlledPawn->AddMovementInput(WorldDirection.GetSafeNormal(), 1.f);
+	Move(InputDirection);
 }
 
 void APlayerActorController::MoveRight(float Value)
 {
 	if (FMath::IsNearlyZero(Value)) return;
 	
-	APawn* ControlledPawn  = GetPawn();
-	if (!ControlledPawn ) return;
-	
-	const FVector InputDirection = FVector(1.f, 0.f, 0.f);
-	const FVector WorldDirection = ControlledPawn->GetActorRotation().RotateVector(InputDirection * Value);
+	const FVector InputDirection = FVector(0.f, Value, 0.f);
 
-	FRotator TargetRotation = InputDirection.Rotation();
-	FRotator CurrentRotation = ControlledPawn->GetActorRotation();
-	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 10.f);
+	Move(InputDirection);
+}
+
+void APlayerActorController::Move(FVector InputDirection)
+{
+	APawn* ControlledPawn = GetPawn();
+	if (!ControlledPawn) return;
+
+	const FVector MoveDirection = InputDirection.GetSafeNormal();
+
+	FRotator TargetRotation = MoveDirection.Rotation();
+	FRotator NewRotation = FMath::RInterpTo
+	(
+		ControlledPawn->GetActorRotation(),
+		TargetRotation,
+		GetWorld()->GetDeltaSeconds(),
+		10.f
+	);
 
 	ControlledPawn->SetActorRotation(NewRotation);
-	ControlledPawn->AddMovementInput(WorldDirection.GetSafeNormal(), 1.f);
+	ControlledPawn->AddMovementInput(MoveDirection, 1.f);
 }
 
 void APlayerActorController::MoveCharacterWithJoystick(FVector2D direction)
 {
 	if (direction.Size() > 0.0f)
 	{
-		// 캐릭터 이동 방향 계산
 		FVector ForwardDirection = FVector(direction.X, direction.Y, 0.0f);
 		APawn* ControlledPawn = GetPawn();
 		if (ControlledPawn)

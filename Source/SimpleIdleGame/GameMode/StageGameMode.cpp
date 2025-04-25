@@ -10,6 +10,8 @@ AStageGameMode::AStageGameMode()
 {
 	DefaultPawnClass = nullptr;
 	PlayerControllerClass = APlayerActorController::StaticClass();
+	
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void AStageGameMode::BeginPlay()
@@ -21,6 +23,12 @@ void AStageGameMode::BeginPlay()
 	SpawnPlayerCharacter();
 	SetCamera();
 	SetIngameWidget();
+}
+
+void AStageGameMode::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	UpdateCameraPos();
 }
 
 void AStageGameMode::SpawnPlayerCharacter()
@@ -75,16 +83,25 @@ void AStageGameMode::SetCamera()
 
 	APawn* PlayerPawn = PC->GetPawn();
 	if (!PlayerPawn) return;
-	
-	FVector PlayerLocation = PlayerPawn->GetActorLocation();
-	FVector CameraLocation = PlayerLocation + FVector(-500.f, 0.f, 600.f);
-	FRotator CameraRotation = FRotator(-45.f, 0.f, 0.f);
 
-	// 카메라 생성
-	ACameraActor* FixedCamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraLocation, CameraRotation);
-	if (FixedCamera)
+	FollowCamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
+	if (FollowCamera)
 	{
-		PC->SetViewTarget(FixedCamera); // 컨트롤러가 이 카메라를 시점으로 삼게 함
+		PC->SetViewTarget(FollowCamera);
 		UE_LOG(LogTemp, Log, TEXT("Set independent camera"));
 	}
+}
+
+void AStageGameMode::UpdateCameraPos()
+{
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+	if (!PC || !FollowCamera) return;
+
+	APawn* PlayerPawn = PC->GetPawn();
+	if (!PlayerPawn) return;
+
+	const FVector PlayerLocation = PlayerPawn->GetActorLocation();
+	const FVector Offset = FVector(-500.f, 0.f, 800.f);
+	FollowCamera->SetActorLocation(PlayerLocation + Offset);
+	FollowCamera->SetActorRotation(FRotator(-60.f, 0.f, 0.f));
 }
