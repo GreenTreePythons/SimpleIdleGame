@@ -16,12 +16,10 @@ void ATitleGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	APlayerController* PC = GetWorld()->GetFirstPlayerController();
-	if (PC)
-	{
-		AActor* CameraActor = UGameplayStatics::GetActorOfClass(GetWorld(), ACameraActor::StaticClass());
-		if (CameraActor)
-		{
-			PC->SetViewTarget(CameraActor);
-		}
-	}
+	if (!PC) return;
+	
+	AActor* CameraActor = UGameplayStatics::GetActorOfClass(GetWorld(), ACameraActor::StaticClass());
+	if (!CameraActor) return;
+	
+	PC->SetViewTarget(CameraActor);
 }

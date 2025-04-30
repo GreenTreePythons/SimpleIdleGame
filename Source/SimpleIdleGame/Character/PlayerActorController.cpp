@@ -14,7 +14,7 @@ void APlayerActorController::OnPossess(APawn* InPawn)
 	Super::OnPossess(InPawn);
 	UE_LOG(LogTemp, Warning, TEXT(">>> OnPossess: Pawn possessed"));
 
-	SetupInputComponent();
+	// SetupInputComponent();
 }
 
 void APlayerActorController::SetupInputComponent()
@@ -66,13 +66,15 @@ void APlayerActorController::Move(FVector InputDirection)
 
 void APlayerActorController::MoveCharacterWithJoystick(FVector2D direction)
 {
-	if (direction.Size() > 0.0f)
-	{
-		FVector ForwardDirection = FVector(direction.X, direction.Y, 0.0f);
-		APawn* ControlledPawn = GetPawn();
-		if (ControlledPawn)
-		{
-			ControlledPawn->AddMovementInput(ForwardDirection, 1.0f);
-		}
-	}
+	// 조이스틱 방향이 없다면 리턴
+	if (direction.Size() <= 0.0f) return;
+
+	APawn* ControlledPawn = GetPawn();
+	if (!ControlledPawn) return;
+
+	// 조이스틱 방향을 FVector로 변환 (Z축은 0)
+	FVector ForwardDirection = FVector(direction.X, direction.Y, 0.0f);
+	
+	// 이동: AddMovementInput은 기본적으로 로컬 좌표계 기준으로 이동 방향을 처리
+	ControlledPawn->AddMovementInput(ForwardDirection, 1.0f);
 }

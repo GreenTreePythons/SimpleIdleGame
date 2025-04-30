@@ -10,12 +10,10 @@ void ATitleHUD::BeginPlay()
     
     TitleWidgetClass = LoadClass<UUserWidget>(nullptr, TEXT("/Game/Widgets/WBP_TitleWidget.WBP_TitleWidget_C"));
     
-    if (TitleWidgetClass)
-    {
-        TitleWidget = CreateWidget<UUserWidget>(GetWorld(), TitleWidgetClass);
-        if (TitleWidget)
-        {
-            TitleWidget->AddToViewport();
-        }
-    }
+    if (!TitleWidgetClass) return;
+    
+    TitleWidget = CreateWidget<UUserWidget>(GetWorld(), TitleWidgetClass);
+    if (!TitleWidget) return;
+    
+    TitleWidget->AddToViewport();
 }

@@ -34,46 +34,31 @@ void AStageGameMode::Tick(float DeltaTime)
 void AStageGameMode::SpawnPlayerCharacter()
 {
 	UClass* PlayerCharacterClass = LoadObject<UClass>(nullptr, TEXT("/Game/Characters/Farmer/Characters/Character_BP/Farmer_BP.Farmer_BP_C"));
-	if (PlayerCharacterClass)
-	{
-		APlayerController* PC = GetWorld()->GetFirstPlayerController();
-		if (PC)
-		{
-			FVector SpawnLocation = FVector(0.f, 0.f, 100.f);
-			FRotator SpawnRotation = FRotator::ZeroRotator;
+	if (!PlayerCharacterClass) return;
+	
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+	if (!PC) return;
+	
+	FVector SpawnLocation = FVector(0.f, 0.f, 100.f);
+	FRotator SpawnRotation = FRotator::ZeroRotator;
 
-			AActor* PlayerCharacter = GetWorld()->SpawnActor<AActor>(PlayerCharacterClass, SpawnLocation, SpawnRotation);
-			APlayerActor* PlayerActor = Cast<APlayerActor>(PlayerCharacter);
-			if (PlayerActor)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Set Player actor"));
-				PC->Possess(Cast<APawn>(PlayerActor));
-			}
-		}
-	}
+	AActor* PlayerCharacter = GetWorld()->SpawnActor<AActor>(PlayerCharacterClass, SpawnLocation, SpawnRotation);
+	APlayerActor* PlayerActor = Cast<APlayerActor>(PlayerCharacter);
+	if (!PlayerActor) return;
+	
+	UE_LOG(LogTemp, Warning, TEXT("Set Player actor"));
+	PC->Possess(Cast<APawn>(PlayerActor));
 }
 
 void AStageGameMode::SetIngameWidget()
 {
 	TSubclassOf<UUserWidget> WidgetClass = LoadClass<UUserWidget>(nullptr, TEXT("/Game/Widgets/WBP_IngameWidget.WBP_IngameWidget_C"));
-	if (WidgetClass)
-	{
-		// UUserWidget* IngameWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetClass);
-		UIngameWidget* IngameWidget = Cast<UIngameWidget>(CreateWidget<UUserWidget>(GetWorld(), WidgetClass));
-		if (IngameWidget)
-		{
-			IngameWidget->AddToViewport();
-			UE_LOG(LogTemp, Log, TEXT("IngameWidget 뷰포트에 추가 완료"));
-		}
-		else
-		{
-			UE_LOG(LogTemp, Log, TEXT("IngameWidget 뷰포트에 추가 실패"));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Log, TEXT("IngameWidget 로드 실패"));
-	}
+	if (!WidgetClass) return;
+	
+	UIngameWidget* IngameWidget = Cast<UIngameWidget>(CreateWidget<UUserWidget>(GetWorld(), WidgetClass));
+	if (!IngameWidget) return;
+	
+	IngameWidget->AddToViewport();
 }
 
 void AStageGameMode::SetCamera()
@@ -85,11 +70,10 @@ void AStageGameMode::SetCamera()
 	if (!PlayerPawn) return;
 
 	FollowCamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
-	if (FollowCamera)
-	{
-		PC->SetViewTarget(FollowCamera);
-		UE_LOG(LogTemp, Log, TEXT("Set independent camera"));
-	}
+	if (!FollowCamera) return;
+	
+	PC->SetViewTarget(FollowCamera);
+	UE_LOG(LogTemp, Log, TEXT("Set independent camera"));
 }
 
 void AStageGameMode::UpdateCameraPos()

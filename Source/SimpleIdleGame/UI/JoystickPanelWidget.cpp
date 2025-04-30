@@ -9,17 +9,15 @@ void UJoystickPanelWidget::NativeConstruct()
     m_NormalizedDirection = FVector2D::ZeroVector;
     m_bIsTouching = false;
 
-    if (Joystick)
-    {
-        Joystick->SetRenderTranslation(FVector2D::ZeroVector);
-    }
-
+    if (!Joystick) return;
+    
+    Joystick->SetRenderTranslation(FVector2D::ZeroVector);
+    
     UCanvasPanelSlot* CanvasSlot = Cast<UCanvasPanelSlot>(JoystickBG->Slot);
-    if (CanvasSlot)
-    {
-        FVector2D size = CanvasSlot->GetSize();
-        m_JoystickRadius = size.X * 0.5f;
-    }
+    if (!CanvasSlot) return;
+    
+    FVector2D size = CanvasSlot->GetSize();
+    m_JoystickRadius = size.X * 0.5f;
 }
 
 FReply UJoystickPanelWidget::NativeOnTouchStarted(const FGeometry& InGeometry, const FPointerEvent& InGestureEvent)
@@ -142,12 +140,10 @@ void UJoystickPanelWidget::ResetJoystickPosition()
 {
     m_bIsTouching = false;
     m_NormalizedDirection = FVector2D::ZeroVector;
-    if (Joystick)
-    {
-        UCanvasPanelSlot* CanvasSlot = Cast<UCanvasPanelSlot>(Joystick->Slot);
-        if (CanvasSlot)
-        {
-            CanvasSlot->SetPosition(FVector2d::ZeroVector);  
-        }
-    }
+    if (!Joystick) return;
+    
+    UCanvasPanelSlot* CanvasSlot = Cast<UCanvasPanelSlot>(Joystick->Slot);
+    if (!CanvasSlot) return;
+    
+    CanvasSlot->SetPosition(FVector2d::ZeroVector);  
 }

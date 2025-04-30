@@ -41,54 +41,54 @@ void UTitleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 	switch (m_FadeStage)
 	{
-	case EFadeStage::WaitBeforeLogoIn:
-		{
-			if (m_ElapsedTime >= 1.5f)
+		case EFadeStage::WaitBeforeLogoIn:
 			{
-				UE_LOG(LogTemp, Error, TEXT("Logo ui fade in"));
-				m_ElapsedTime = 0.0f;
-				m_FadeStage = EFadeStage::FadeInLogo;
+				if (m_ElapsedTime >= 1.5f)
+				{
+					UE_LOG(LogTemp, Error, TEXT("Logo ui fade in"));
+					m_ElapsedTime = 0.0f;
+					m_FadeStage = EFadeStage::FadeInLogo;
+				}
+				break;
 			}
-			break;
-		}
 
-	case EFadeStage::FadeInLogo:
-		{
-			m_FadeInAlpha = FMath::Clamp(m_ElapsedTime / 1.0f, 0.0f, 1.0f);
-			
-			if (m_FadeInAlpha >= 1.0f)
+		case EFadeStage::FadeInLogo:
 			{
-				UE_LOG(LogTemp, Error, TEXT("Logo ui fade out"));
-				m_ElapsedTime = 0.0f;
-				m_FadeStage = EFadeStage::FadeOutGroup;
+				m_FadeInAlpha = FMath::Clamp(m_ElapsedTime / 1.0f, 0.0f, 1.0f);
+				
+				if (m_FadeInAlpha >= 1.0f)
+				{
+					UE_LOG(LogTemp, Error, TEXT("Logo ui fade out"));
+					m_ElapsedTime = 0.0f;
+					m_FadeStage = EFadeStage::FadeOutGroup;
+				}
+				break;
 			}
-			break;
-		}
 
-	case EFadeStage::FadeOutGroup:
-		{
-			
-			float fadeOutAlpha = FMath::Clamp(1.0f - (m_ElapsedTime / 1.0f), 0.0f, 1.0f);
-			if (LogoBgImage)
-				LogoBgImage->SetRenderOpacity(fadeOutAlpha);
-			
-			if (RootUIGroup)
-				RootUIGroup->SetRenderOpacity(fadeOutAlpha);
-
-			if (fadeOutAlpha <= 0.0f)
+		case EFadeStage::FadeOutGroup:
 			{
-				UE_LOG(LogTemp, Error, TEXT("Logo ui done"));
-				m_FadeStage = EFadeStage::Done;
-			}
-			break;
-		}
+				
+				float fadeOutAlpha = FMath::Clamp(1.0f - (m_ElapsedTime / 1.0f), 0.0f, 1.0f);
+				if (LogoBgImage)
+					LogoBgImage->SetRenderOpacity(fadeOutAlpha);
+				
+				if (RootUIGroup)
+					RootUIGroup->SetRenderOpacity(fadeOutAlpha);
 
-	case EFadeStage::Done:
-		{
-			RootUIGroup->SetVisibility(ESlateVisibility::Collapsed);
-			LogoBgImage->SetVisibility(ESlateVisibility::Collapsed);
-			break;
-		}
+				if (fadeOutAlpha <= 0.0f)
+				{
+					UE_LOG(LogTemp, Error, TEXT("Logo ui done"));
+					m_FadeStage = EFadeStage::Done;
+				}
+				break;
+			}
+
+		case EFadeStage::Done:
+			{
+				RootUIGroup->SetVisibility(ESlateVisibility::Collapsed);
+				LogoBgImage->SetVisibility(ESlateVisibility::Collapsed);
+				break;
+			}
 	}
 }
 
