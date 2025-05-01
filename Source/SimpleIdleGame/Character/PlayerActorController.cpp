@@ -42,7 +42,7 @@ void APlayerActorController::MoveRight(float Value)
 	const FVector InputDirection = FVector(0.f, Value, 0.f);
 
 	Move(InputDirection);
-}
+} 
 
 void APlayerActorController::Move(FVector InputDirection)
 {
