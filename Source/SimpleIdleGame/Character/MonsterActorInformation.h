@@ -13,17 +13,11 @@ struct FMonsterActorInformation : public FTableRowBase
 
 public:
 	FMonsterActorInformation()
-		: Name("default"), Rank(1), Level(1), Health(100.0f), AttackPower(10.0f), DefensePower(5.0f),  AttackRange(1.0f)
+		: SID("default"), Health(100.0f), AttackPower(10.0f), DefensePower(5.0f),  AttackRange(1.0f)
 	{}
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Information")
-	FString Name;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Information")
-	int32 Rank;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Information")
-	int32 Level;
+	FString SID;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float Health;
