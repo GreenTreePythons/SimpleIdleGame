@@ -24,10 +24,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster Info")
 	FMonsterActorInformation MonsterInformation;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster Stats")
+	UDataTable* MonsterStatsTable;
+
 	// 몬스터 공격 방법 (근접 또는 원거리)
 	void Attack();
-
-	// 몬스터 타입에 따른 공격 함수
-	void MeleeAttack();
-	void RangedAttack();
+	void LoadMonsterData(const FString& SID);
 };

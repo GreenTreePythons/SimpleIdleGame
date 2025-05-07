@@ -6,7 +6,7 @@
 
 UStageManager::UStageManager()
 {
-	// 기본 스테이지 레벨 설정 (예: 1부터 시작)
+	// 기본 스테이지 레벨 설정
 	CurrentStageLevel = 1;
 }
 
@@ -19,7 +19,7 @@ void UStageManager::SetupStage(int32 StageLevel)
 void UStageManager::ActivateSpawnPointsForLevel(int32 StageLevel)
 {
 	// StageLevel에 맞는 스폰 포인트 활성화/비활성화 처리
-	for (UStageMonsterActorSpawnPoint* SpawnPoint : SpawnPoints)
+	for (AStageMonsterActorSpawnPoint* SpawnPoint : SpawnPoints)
 	{
 		if (SpawnPoint)
 		{
@@ -35,3 +35,4 @@ void UStageManager::ActivateSpawnPointsForLevel(int32 StageLevel)
 		}
 	}
 }
+

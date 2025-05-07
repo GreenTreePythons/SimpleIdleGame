@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "EditorMetadataOverrides.h"
 #include "Engine/DataTable.h"
 #include "MonsterActorInformation.generated.h"
 

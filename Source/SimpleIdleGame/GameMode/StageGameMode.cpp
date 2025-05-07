@@ -4,6 +4,7 @@
 #include "PlayerActor.h"
 #include "PlayerActorController.h"
 #include "Camera/CameraActor.h"
+#include "StageController/StageManager.h"
 #include "Kismet/GameplayStatics.h"
 
 AStageGameMode::AStageGameMode()
@@ -19,7 +20,10 @@ void AStageGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Log, TEXT("스테이지 시작"));
-
+	
+	StageManager = NewObject<UStageManager>(this);
+	StageManager->SetupStage(1);
+	
 	SpawnPlayerCharacter();
 	SetCamera();
 	SetIngameWidget();

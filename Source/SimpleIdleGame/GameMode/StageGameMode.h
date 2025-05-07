@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "StageController/StageManager.h"
 #include "StageGameMode.generated.h"
 
 /**
@@ -23,6 +24,9 @@ protected:
 	
 	UPROPERTY()
 	ACameraActor* FollowCamera = nullptr;
+
+	UPROPERTY()
+	UStageManager* StageManager;
 	
 private:
 	void SpawnPlayerCharacter();

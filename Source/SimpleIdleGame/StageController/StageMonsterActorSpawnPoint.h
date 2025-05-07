@@ -1,42 +1,40 @@
-﻿// StageActorSpawnPoint.h
+﻿// StageMonsterActorSpawnPoint.h
+
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "GameFramework/Actor.h"
+#include "MonsterActor.h"
 #include "StageMonsterActorSpawnPoint.generated.h"
 
-// 몬스터 스폰 지점을 나타내는 UObject 클래스
-UCLASS(Blueprintable)
-class SIMPLEIDLEGAME_API UStageMonsterActorSpawnPoint : public UObject
+// 스폰 포인트에서 몬스터를 소환하는 클래스
+UCLASS()
+class SIMPLEIDLEGAME_API AStageMonsterActorSpawnPoint : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	UStageMonsterActorSpawnPoint();
+	// 기본 생성자
+	AStageMonsterActorSpawnPoint();
 
-	// 스폰할 몬스터의 종류
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn Settings")
-	TSubclassOf<class AMonsterActor> MonsterToSpawn;
+	// 레벨에 맞는 스폰 몬스터 정보
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster Info")
+	TSubclassOf<AMonsterActor> MonsterToSpawn;
 
-	// 스폰할 몬스터의 레벨
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn Settings")
-	int32 MonsterLevel;
-
-	// 스폰할 몬스터의 수
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn Settings")
+	// 몬스터의 스폰 수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster Info")
 	int32 SpawnCount;
 
-	// 활성화 여부
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn Settings")
-	bool bIsActive;
+	// 몬스터 스텟 데이터 테이블
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster Info")
+	UDataTable* MonsterStatsTable;
 
-	// 레벨에 맞는 몬스터 스폰 로직 처리
-	void SpawnMonsters(int32 StageLevel, UDataTable* MonsterStatsTable);
+	// 몬스터를 스폰하는 함수
+	void SpawnMonsters(int32 StageLevel);
 
-	// 스폰 포인트 활성화/비활성화 처리
-	UFUNCTION(BlueprintCallable, Category = "Spawn")
-	void ActivateSpawnPoint(int32 StageLevel);  // 레벨을 인자로 받음
+	// 스폰 포인트를 활성화
+	void ActivateSpawnPoint(int32 StageLevel);
 
-	UFUNCTION(BlueprintCallable, Category = "Spawn")
+	// 비활성화 메소드
 	void DeactivateSpawnPoint();
 };
