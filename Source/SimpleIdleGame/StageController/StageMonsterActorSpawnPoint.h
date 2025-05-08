@@ -8,7 +8,7 @@
 #include "StageMonsterActorSpawnPoint.generated.h"
 
 // 스폰 포인트에서 몬스터를 소환하는 클래스
-UCLASS()
+UCLASS(Blueprintable)
 class SIMPLEIDLEGAME_API AStageMonsterActorSpawnPoint : public AActor
 {
 	GENERATED_BODY()
@@ -37,4 +37,6 @@ public:
 
 	// 비활성화 메소드
 	void DeactivateSpawnPoint();
+	void SetSpawnCount(int32 NewSpawnCount);
+	void SetMonsterToSpawn(TSubclassOf<AMonsterActor> NewMonsterClass);
 };

@@ -1,0 +1,5 @@
+StageLevel,ActiveSpawnPointCount,MonsterLevel1_Name,MonsterLevel1_Count,MonsterLevel2_Name,MonsterLevel2_Count,MonsterLevel3_Name,MonsterLevel3_Count,ClearCondition
+1,1,Monster_1,3,Monster_B,2,,,AllMonstersDead
+2,2,Monster_1,4,Monster_2,3,,,AllMonstersDead
+3,3,Monster_1,5,Monster_2,3,Monster_3,2,AllMonstersDead
+4,4,Monster_1,6,Monster_2,4,Monster_3,4,AllMonstersDead

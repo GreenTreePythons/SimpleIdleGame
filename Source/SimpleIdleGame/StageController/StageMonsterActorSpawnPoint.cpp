@@ -24,9 +24,15 @@ void AStageMonsterActorSpawnPoint::SpawnMonsters(int32 StageLevel)
 			// 몬스터 스텟을 바탕으로 몬스터를 스폰
 			for (int32 i = 0; i < SpawnCount; ++i)
 			{
-				// 몬스터 소환
-				GetWorld()->SpawnActor<AMonsterActor>(MonsterToSpawn, GetActorLocation(), GetActorRotation());
+				if (MonsterToSpawn)
+				{
+					GetWorld()->SpawnActor<AMonsterActor>(MonsterToSpawn, GetActorLocation(), GetActorRotation());
+				}
 			}
+		}
+		else
+		{
+			UE_LOG(LogTemp, Log, TEXT("cant find Monster_%d"), StageLevel);
 		}
 	}
 }
@@ -41,4 +47,14 @@ void AStageMonsterActorSpawnPoint::DeactivateSpawnPoint()
 {
 	// 스폰 포인트 비활성화
 	UE_LOG(LogTemp, Log, TEXT("Spawn Point Deactivated"));
+}
+
+void AStageMonsterActorSpawnPoint::SetSpawnCount(int32 NewSpawnCount)
+{
+	SpawnCount = NewSpawnCount;
+}
+
+void AStageMonsterActorSpawnPoint::SetMonsterToSpawn(TSubclassOf<AMonsterActor> NewMonsterClass)
+{
+	MonsterToSpawn = NewMonsterClass;
 }
