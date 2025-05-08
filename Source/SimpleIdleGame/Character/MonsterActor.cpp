@@ -21,7 +21,7 @@ void AMonsterActor::Tick(float DeltaTime)
 
 void AMonsterActor::Attack()
 {
-	UE_LOG(LogTemp, Warning, TEXT(">>> Attack()"));	
+	// UE_LOG(LogTemp, Warning, TEXT(">>> Attack()"));	
 }
 
 void AMonsterActor::LoadMonsterData(const FString& SID)

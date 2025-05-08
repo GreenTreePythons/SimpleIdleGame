@@ -11,7 +11,21 @@ UStageManager::UStageManager()
 void UStageManager::SetupStage(int32 StageLevel)
 {
     CurrentStageLevel = StageLevel;
-    LoadStageData(CurrentStageLevel);
+    if (!StageDataTable)
+    {
+        // 파일 경로에서 UDataTable 로드
+        StageDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Data/ProtoStage.ProtoStage"));
+    }
+
+    if (StageDataTable)
+    {
+        // StageLevel에 맞는 데이터 처리
+        LoadStageData(StageLevel);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to load StageDataTable"));
+    }
 }
 
 void UStageManager::LoadStageData(int32 StageLevel)
