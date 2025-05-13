@@ -66,6 +66,7 @@ void UStageManager::LoadStageData(int32 StageLevel)
 // 몬스터 소환 함수
 void UStageManager::SpawnMonsters(const FString& MonsterName, int32 MonsterCount)
 {
+    UE_LOG(LogTemp, Warning, TEXT("Spawn monster count %d"), MonsterCount);
     for (int32 i = 0; i < MonsterCount; ++i)
     {
         FActorSpawnParameters SpawnParams;
