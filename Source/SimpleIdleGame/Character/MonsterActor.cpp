@@ -29,7 +29,7 @@ void AMonsterActor::LoadMonsterData(const FString& SID)
 	// 데이터 테이블에서 SID에 맞는 몬스터 정보 로드
 	static const FString ContextString(TEXT("Monster Info Context"));
 	FMonsterActorInformation* MonsterInfo = MonsterStatsTable->FindRow<FMonsterActorInformation>(FName(*SID), ContextString);
-
+ 
 	if (MonsterInfo)
 	{
 		// 데이터 테이블에서 불러온 몬스터 스텟 설정

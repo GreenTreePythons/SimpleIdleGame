@@ -63,7 +63,6 @@ void UStageManager::LoadStageData(int32 StageLevel)
 }
 
 
-// 몬스터 소환 함수
 void UStageManager::SpawnMonsters(const FString& MonsterName, int32 MonsterCount)
 {
     UE_LOG(LogTemp, Warning, TEXT("Spawn monster count %d"), MonsterCount);
@@ -75,32 +74,30 @@ void UStageManager::SpawnMonsters(const FString& MonsterName, int32 MonsterCount
     }
 }
 
-// 스폰 포인트에서 몬스터 소환
-void UStageManager::SpawnMonstersAtSpawnPoint(int32 SpawnPointIndex, FStageInformation* StageInfo)
-{
-    if (SpawnPoints.IsValidIndex(SpawnPointIndex))
-    {
-        AStageMonsterActorSpawnPoint* SpawnPoint = SpawnPoints[SpawnPointIndex];
-        if (SpawnPoint)
-        {
-            // 몬스터 소환
-            SpawnMonstersAtPoint(SpawnPoint, StageInfo->MonsterLevel1_Name, StageInfo->MonsterLevel1_Count);
-            SpawnMonstersAtPoint(SpawnPoint, StageInfo->MonsterLevel2_Name, StageInfo->MonsterLevel2_Count);
-            SpawnMonstersAtPoint(SpawnPoint, StageInfo->MonsterLevel3_Name, StageInfo->MonsterLevel3_Count);
-        }
-    }
-}
-
-// 개별 스폰 포인트에서 몬스터 소환
-void UStageManager::SpawnMonstersAtPoint(AStageMonsterActorSpawnPoint* SpawnPoint, const FString& MonsterName, int32 MonsterCount)
-{
-    if (MonsterCount > 0)
-    {
-        for (int32 i = 0; i < MonsterCount; ++i)
-        {
-            // 실제로 몬스터를 스폰할 때는 몬스터 클래스와 위치를 고려하여 소환해야 합니다.
-            GetWorld()->SpawnActor<AMonsterActor>(AMonsterActor::StaticClass(), SpawnPoint->GetActorLocation(), SpawnPoint->GetActorRotation());
-            UE_LOG(LogTemp, Log, TEXT("Spawned %d %s at spawn point"), MonsterCount, *MonsterName);
-        }
-    }
-}
+// void UStageManager::SpawnMonstersAtSpawnPoint(int32 SpawnPointIndex, FStageInformation* StageInfo)
+// {
+//     if (SpawnPoints.IsValidIndex(SpawnPointIndex))
+//     {
+//         AStageMonsterActorSpawnPoint* SpawnPoint = SpawnPoints[SpawnPointIndex];
+//         if (SpawnPoint)
+//         {
+//             // 몬스터 소환
+//             SpawnMonstersAtPoint(SpawnPoint, StageInfo->MonsterLevel1_Name, StageInfo->MonsterLevel1_Count);
+//             SpawnMonstersAtPoint(SpawnPoint, StageInfo->MonsterLevel2_Name, StageInfo->MonsterLevel2_Count);
+//             SpawnMonstersAtPoint(SpawnPoint, StageInfo->MonsterLevel3_Name, StageInfo->MonsterLevel3_Count);
+//         }
+//     }
+// }
+//
+// void UStageManager::SpawnMonstersAtPoint(AStageMonsterActorSpawnPoint* SpawnPoint, const FString& MonsterName, int32 MonsterCount)
+// {
+//     if (MonsterCount > 0)
+//     {
+//         for (int32 i = 0; i < MonsterCount; ++i)
+//         {
+//             // 실제로 몬스터를 스폰할 때는 몬스터 클래스와 위치를 고려하여 소환해야 합니다.
+//             GetWorld()->SpawnActor<AMonsterActor>(AMonsterActor::StaticClass(), SpawnPoint->GetActorLocation(), SpawnPoint->GetActorRotation());
+//             UE_LOG(LogTemp, Log, TEXT("Spawned %d %s at spawn point"), MonsterCount, *MonsterName);
+//         }
+//     }
+// }

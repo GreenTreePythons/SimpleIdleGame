@@ -37,7 +37,7 @@ void AStageGameMode::Tick(float DeltaTime)
 
 void AStageGameMode::SpawnPlayerCharacter()
 {
-	UClass* PlayerCharacterClass = LoadObject<UClass>(nullptr, TEXT("/Game/Characters/Farmer/Characters/Character_BP/Farmer_BP.Farmer_BP_C"));
+	UClass* PlayerCharacterClass = LoadObject<UClass>(nullptr, TEXT("/Game/Characters/Farmer/Characters/BP_Character/Farmer_BP.Farmer_BP_C"));
 	if (!PlayerCharacterClass) return;
 	
 	APlayerController* PC = GetWorld()->GetFirstPlayerController();

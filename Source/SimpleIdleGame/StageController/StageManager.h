@@ -38,9 +38,9 @@ private:
 	// 몬스터 소환 함수
 	void SpawnMonsters(const FString& MonsterName, int32 MonsterCount);
 
-	// 스폰 포인트에서 몬스터 소환
-	void SpawnMonstersAtSpawnPoint(int32 SpawnPointIndex, FStageInformation* StageInfo);
-
-	// 몬스터 소환 함수
-	void SpawnMonstersAtPoint(AStageMonsterActorSpawnPoint* SpawnPoint, const FString& MonsterName, int32 MonsterCount);
+	// // 스폰 포인트에서 몬스터 소환
+	// void SpawnMonstersAtSpawnPoint(int32 SpawnPointIndex, FStageInformation* StageInfo);
+	//
+	// // 몬스터 소환 함수
+	// void SpawnMonstersAtPoint(AStageMonsterActorSpawnPoint* SpawnPoint, const FString& MonsterName, int32 MonsterCount);
 };
