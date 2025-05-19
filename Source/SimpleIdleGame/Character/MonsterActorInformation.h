@@ -18,8 +18,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Information")
 	FString SID;
 	
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Information")
-	// FString ActorMeshPath;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Information")
+	FString ActorMeshPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float Health;
