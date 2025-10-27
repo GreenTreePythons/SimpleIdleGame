@@ -70,9 +70,6 @@ void AStageGameMode::SetCamera()
 	APlayerController* PC = GetWorld()->GetFirstPlayerController();
 	if (!PC) return;
 
-	APawn* PlayerPawn = PC->GetPawn();
-	if (!PlayerPawn) return;
-
 	FollowCamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
 	if (!FollowCamera) return;
 	
